@@ -13,9 +13,11 @@ import javafx.scene.layout.VBox
 import javafx.scene.text.Font
 import javafx.stage.Stage
 import java.util.concurrent.Executors
+import kotlin.system.exitProcess
 
 fun main(args: Array<String>) {
     launch(App::class.java, *args)
+    exitProcess(0)
 }
 
 
@@ -36,14 +38,14 @@ class App : Application() {
         this.font = bigFont
         this.setOnAction { Platform.exit() }
     }
-    private var running = true
     private val service = Executors.newSingleThreadExecutor()
 
 
     override fun start(primaryStage: Stage) {
         val root = createRoot()
-        val scene = Scene(root, 600.0, 400.0)
+        val scene = Scene(root)
         primaryStage.scene = scene
+        primaryStage.isFullScreen = true
         primaryStage.show()
         readCard()
     }

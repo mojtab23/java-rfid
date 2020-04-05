@@ -34,8 +34,8 @@ object RFIDReaderService {
     }
 
 
-    private fun successBeep() = buzzer.beep(0.1F, 0.05F, 2, true)
-    private fun failBeep() = buzzer.beep(0.4F, 0.1F, 1, true)
+    private fun successBeep() = buzzer.beep(0.1F, 0.05F, 2, false)
+    private fun failBeep() = buzzer.beep(0.4F, 0.1F, 1, false)
 
 //    private inline fun <T : Closeable?> Array<T>.use(block: () -> Unit) {
 //        var exception: Throwable? = null
@@ -62,7 +62,7 @@ object RFIDReaderService {
         var cardId: String? = null
         while (running && cardId == null) {
             cardId = readCard()
-            SleepUtil.sleepSeconds(1)
+            SleepUtil.sleepMillis(500)
         }
         if (running && cardId != null) {
             callback(cardId)

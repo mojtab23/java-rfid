@@ -11,12 +11,14 @@ plugins {
     // Apply the application plugin to add support for building a CLI application.
     application
 
+    id("org.openjfx.javafxplugin") version "0.0.8"
+
 }
 
 repositories {
     // Use jcenter for resolving dependencies.
     // You can declare any Maven/Ivy/file repository here.
-    jcenter()
+    mavenCentral()
 }
 
 dependencies {
@@ -42,3 +44,7 @@ application {
     mainClassName = "ir.ramankav.rfid.AppKt"
 }
 
+javafx {
+    version = "11"
+    modules("javafx.controls")
+}
