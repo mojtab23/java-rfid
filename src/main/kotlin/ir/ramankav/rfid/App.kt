@@ -13,6 +13,7 @@ import javafx.scene.layout.VBox
 import javafx.scene.text.Font
 import javafx.stage.Stage
 import java.util.concurrent.Executors
+import kotlin.properties.Delegates
 import kotlin.system.exitProcess
 
 fun main(args: Array<String>) {
@@ -24,6 +25,8 @@ fun main(args: Array<String>) {
 private const val defaultText = "Please provide a CARD"
 
 class App : Application() {
+
+    private var enableRFID by Delegates.notNull<Boolean>()
 
     private val bigFont = Font(48.0)
 
@@ -42,12 +45,14 @@ class App : Application() {
 
 
     override fun start(primaryStage: Stage) {
+        loadFont()
         val root = createRoot()
         val scene = Scene(root)
+        scene.stylesheets += loadStyles()
         primaryStage.scene = scene
         primaryStage.isFullScreen = true
         primaryStage.show()
-        readCard()
+        enableRFIDService()
     }
 
     private fun createRoot(): Parent {
@@ -58,12 +63,15 @@ class App : Application() {
         root.children += textLabel
         root.children += button
         root.children += closeButton
+        root.children += DigitalClock()
         return root
     }
 
 
     override fun stop() {
-        RFIDReaderService.closeResources()
+        if (enableRFID) {
+            RFIDReaderService.closeResources()
+        }
     }
 
     private fun readCard() {
@@ -83,4 +91,26 @@ class App : Application() {
     }
 
 
+    private fun loadFont() {
+        val vazirFont = ResourceResolver.getResourceFor(this.javaClass, "Vazir.ttf")
+        val font = Font.loadFont(vazirFont, 18.0)
+        println("loaded font: $font")
+    }
+
+    private fun loadStyles(): String {
+        return ResourceResolver.getResourceFor(this.javaClass, "styles.css")
+    }
+
+
+    private fun enableRFIDService() {
+        if (enableRFID) {
+            readCard()
+        }
+    }
+
+    override fun init() {
+        // by default enable RFID
+        enableRFID = parameters.named["enableRFID"]?.toBoolean() ?: true
+
+    }
 }
