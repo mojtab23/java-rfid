@@ -1,15 +1,16 @@
 package ir.ramankav.rfid
 
+import ir.ramankav.rfid.view.Home
+import ir.ramankav.rfid.view.Numpad
+import ir.ramankav.rfid.view.ResourceResolver
 import javafx.application.Application
 import javafx.application.Application.launch
 import javafx.application.Platform
 import javafx.concurrent.Task
-import javafx.geometry.Insets
 import javafx.scene.Parent
 import javafx.scene.Scene
 import javafx.scene.control.Button
 import javafx.scene.control.Label
-import javafx.scene.layout.VBox
 import javafx.scene.text.Font
 import javafx.stage.Stage
 import java.util.concurrent.Executors
@@ -47,7 +48,7 @@ class App : Application() {
     override fun start(primaryStage: Stage) {
         loadFont()
         val root = createRoot()
-        val scene = Scene(root)
+        val scene = Scene(root,600.0,400.0)
         scene.stylesheets += loadStyles()
         primaryStage.scene = scene
         primaryStage.isFullScreen = true
@@ -56,15 +57,17 @@ class App : Application() {
     }
 
     private fun createRoot(): Parent {
-        val root = VBox()
-        root.spacing = 20.0
-        root.padding = Insets(20.0)
-        button.isDisable = true
-        root.children += textLabel
-        root.children += button
-        root.children += closeButton
-        root.children += DigitalClock()
-        return root
+//        val root = VBox()
+//        root.spacing = 20.0
+//        root.padding = Insets(20.0)
+//        button.isDisable = true
+//        root.children += textLabel
+//        root.children += button
+//        root.children += closeButton
+//        root.children += DigitalClock()
+//        return root
+//        return Numpad
+        return Home
     }
 
 

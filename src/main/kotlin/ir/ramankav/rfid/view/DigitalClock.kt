@@ -1,5 +1,6 @@
-package ir.ramankav.rfid
+package ir.ramankav.rfid.view
 
+import ir.ramankav.rfid.JalaliCalendar
 import javafx.animation.Animation
 import javafx.animation.KeyFrame
 import javafx.animation.Timeline
@@ -15,6 +16,7 @@ import java.util.*
 class DigitalClock : Label() {
     init {
         id = "digitalClock"
+        styleClass += "footer"
 //        stylesheets += ResourceResolver.getResourceFor(this.javaClass, "styles.css")
         bindToTime()
     }
