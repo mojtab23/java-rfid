@@ -26,6 +26,12 @@ object SceneController {
         switchScene(IPConfigView)
     }
 
+    fun showCardView(name: String, cardId: String) {
+        CardView.name = name
+        CardView.cardId = cardId
+        switchScene(CardView)
+    }
+
 
     private fun <T> switchScene(node: T) where T : Parent, T : VisibleAware {
         currentRoot.becomesInvisible()
