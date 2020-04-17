@@ -19,17 +19,7 @@ private const val UNLOCK = "بازکردن"
 
 object UnlockView : HBox(), VisibleAware {
 
-    private val timerService = object : Service<Unit>() {
-        override fun createTask(): Task<Unit> {
-            return object : Task<Unit>() {
-                override fun call() {
-                    Thread.sleep(Duration.ofSeconds(60).toMillis())
-                    println("Timeout!")
-                    Platform.runLater { SceneController.showHomeView() }
-                }
-            }
-        }
-    }
+    private val timerService = createTimerService(Duration.ofSeconds(30))
 
     init {
         val rightItems = VBox()
@@ -45,7 +35,7 @@ object UnlockView : HBox(), VisibleAware {
         rightItems.children += passwordField
 
         val button = Button(UNLOCK)
-        button.onAction = EventHandler { SceneController.showHomeView() }
+        button.onAction = EventHandler { SceneController.showIPConfigView() }
         rightItems.children += button
 
         val numpad = Numpad()
@@ -71,4 +61,18 @@ object UnlockView : HBox(), VisibleAware {
         cancelCountDownTimer()
     }
 
+}
+
+fun createTimerService(duration: Duration): Service<Unit> {
+    return object : Service<Unit>() {
+        override fun createTask(): Task<Unit> {
+            return object : Task<Unit>() {
+                override fun call() {
+                    Thread.sleep(duration.toMillis())
+                    println("Timeout!")
+                    Platform.runLater { SceneController.showHomeView() }
+                }
+            }
+        }
+    }
 }

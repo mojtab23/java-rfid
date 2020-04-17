@@ -22,6 +22,10 @@ object SceneController {
         switchScene(Home)
     }
 
+    fun showIPConfigView() {
+        switchScene(IPConfigView)
+    }
+
 
     private fun <T> switchScene(node: T) where T : Parent, T : VisibleAware {
         currentRoot.becomesInvisible()
