@@ -1,8 +1,9 @@
 package ir.ramankav.rfid
 
 import ir.ramankav.rfid.view.Home
-import ir.ramankav.rfid.view.Numpad
 import ir.ramankav.rfid.view.ResourceResolver
+import ir.ramankav.rfid.view.SceneController
+import ir.ramankav.rfid.view.UnlockView
 import javafx.application.Application
 import javafx.application.Application.launch
 import javafx.application.Platform
@@ -47,28 +48,13 @@ class App : Application() {
 
     override fun start(primaryStage: Stage) {
         loadFont()
-        val root = createRoot()
-        val scene = Scene(root,600.0,400.0)
-        scene.stylesheets += loadStyles()
+        val scene = SceneController.buildScene()
         primaryStage.scene = scene
         primaryStage.isFullScreen = true
         primaryStage.show()
         enableRFIDService()
     }
 
-    private fun createRoot(): Parent {
-//        val root = VBox()
-//        root.spacing = 20.0
-//        root.padding = Insets(20.0)
-//        button.isDisable = true
-//        root.children += textLabel
-//        root.children += button
-//        root.children += closeButton
-//        root.children += DigitalClock()
-//        return root
-//        return Numpad
-        return Home
-    }
 
 
     override fun stop() {
@@ -100,9 +86,6 @@ class App : Application() {
         println("loaded font: $font")
     }
 
-    private fun loadStyles(): String {
-        return ResourceResolver.getResourceFor(this.javaClass, "styles.css")
-    }
 
 
     private fun enableRFIDService() {
