@@ -6,6 +6,10 @@ import com.diozero.devices.Buzzer
 import com.diozero.devices.MFRC522
 import com.diozero.util.Hex
 import com.diozero.util.SleepUtil
+import ir.ramankav.rfid.view.SceneController
+import javafx.application.Platform
+import javafx.concurrent.Service
+import javafx.concurrent.Task
 
 object RFIDReaderService {
 
@@ -13,6 +17,32 @@ object RFIDReaderService {
     private val rfidBoard = MFRC522(SPIConstants.DEFAULT_SPI_CONTROLLER, 0, DigitalOutputDevice(25, true, false))
     private var running = true
 
+    private val service = object : Service<Unit>() {
+        override fun createTask(): Task<Unit> {
+            return object : Task<Unit>() {
+                override fun cancel(mayInterruptIfRunning: Boolean): Boolean {
+                    running = false
+                    return super.cancel(mayInterruptIfRunning)
+                }
+
+                override fun call() {
+                    readId {
+                        Platform.runLater {
+                            SceneController.showCardView("مجتبی زارع‌زاده", it)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    fun startReadingCard() {
+        service.restart()
+    }
+
+    fun stopReadingCard() {
+        service.cancel()
+    }
 
     private fun readCard(): String? {
 
@@ -58,7 +88,7 @@ object RFIDReaderService {
 //        }
 //    }
 
-    fun readId(callback: (String) -> Unit) {
+    private fun readId(callback: (String) -> Unit) {
         var cardId: String? = null
         running = true
         while (running && cardId == null) {
@@ -68,10 +98,6 @@ object RFIDReaderService {
         if (running && cardId != null) {
             callback(cardId)
         }
-    }
-
-    fun stopReading() {
-        running = false
     }
 
     fun closeResources() {

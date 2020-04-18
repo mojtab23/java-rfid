@@ -1,12 +1,12 @@
 package ir.ramankav.rfid
 
-import ir.ramankav.rfid.view.Home
 import ir.ramankav.rfid.view.ResourceResolver
 import ir.ramankav.rfid.view.SceneController
 import javafx.application.Application
 import javafx.application.Application.launch
 import javafx.scene.text.Font
 import javafx.stage.Stage
+import kotlin.properties.Delegates
 import kotlin.system.exitProcess
 
 fun main(args: Array<String>) {
@@ -15,7 +15,9 @@ fun main(args: Array<String>) {
 }
 
 
-class App : Application() {
+object App : Application() {
+
+    var enableRFID by Delegates.notNull<Boolean>()
 
     override fun start(primaryStage: Stage) {
         loadFont()
@@ -27,11 +29,10 @@ class App : Application() {
 
 
     override fun stop() {
-        if (Home.enableRFID) {
+        if (enableRFID) {
             RFIDReaderService.closeResources()
         }
     }
-
 
     private fun loadFont() {
         val vazirFont = ResourceResolver.getResourceFor(this.javaClass, "Vazir.ttf")
@@ -41,7 +42,20 @@ class App : Application() {
 
     override fun init() {
         // by default enable RFID
-        Home.enableRFID = parameters.named["enableRFID"]?.toBoolean() ?: true
+        enableRFID = parameters.named["enableRFID"]?.toBoolean() ?: true
 
     }
+
+    fun readRFIDIfIsEnable() {
+        if (enableRFID) {
+            RFIDReaderService.startReadingCard()
+        }
+    }
+
+    fun stopReadingRFIDIfIsEnable() {
+        if (enableRFID) {
+            RFIDReaderService.stopReadingCard()
+        }
+    }
+
 }
