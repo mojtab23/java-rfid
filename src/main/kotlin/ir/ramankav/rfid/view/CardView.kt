@@ -1,5 +1,6 @@
 package ir.ramankav.rfid.view
 
+import ir.ramankav.rfid.AppSetting
 import javafx.event.EventHandler
 import javafx.scene.control.Button
 import javafx.scene.control.Label
@@ -43,14 +44,16 @@ object CardView : VBox(12.0), VisibleAware {
 
 
     override fun becomesVisible() {
+        println("Card view is visible")
         timerService.restart()
+        AppSetting.readRFIDIfIsEnable()
     }
 
     override fun becomesInvisible() {
+        println("Card view is invisible")
         timerService.cancel()
+        AppSetting.stopReadingRFIDIfIsEnable()
     }
-
-
 
 
 }

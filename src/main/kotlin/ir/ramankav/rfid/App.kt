@@ -15,9 +15,8 @@ fun main(args: Array<String>) {
 }
 
 
-object App : Application() {
+class App : Application() {
 
-    var enableRFID by Delegates.notNull<Boolean>()
 
     override fun start(primaryStage: Stage) {
         loadFont()
@@ -29,9 +28,7 @@ object App : Application() {
 
 
     override fun stop() {
-        if (enableRFID) {
-            RFIDReaderService.closeResources()
-        }
+        AppSetting.stop()
     }
 
     private fun loadFont() {
@@ -42,8 +39,19 @@ object App : Application() {
 
     override fun init() {
         // by default enable RFID
-        enableRFID = parameters.named["enableRFID"]?.toBoolean() ?: true
+        AppSetting.enableRFID = parameters.named["enableRFID"]?.toBoolean() ?: true
 
+    }
+
+
+}
+
+object AppSetting {
+    var enableRFID by Delegates.notNull<Boolean>()
+    fun stopReadingRFIDIfIsEnable() {
+        if (enableRFID) {
+            RFIDReaderService.stopReadingCard()
+        }
     }
 
     fun readRFIDIfIsEnable() {
@@ -52,10 +60,9 @@ object App : Application() {
         }
     }
 
-    fun stopReadingRFIDIfIsEnable() {
+    fun stop() {
         if (enableRFID) {
-            RFIDReaderService.stopReadingCard()
+            RFIDReaderService.closeResources()
         }
     }
-
 }

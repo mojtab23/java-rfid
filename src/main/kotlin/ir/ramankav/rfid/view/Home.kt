@@ -1,6 +1,6 @@
 package ir.ramankav.rfid.view
 
-import ir.ramankav.rfid.App
+import ir.ramankav.rfid.AppSetting
 import javafx.event.EventHandler
 import javafx.geometry.Insets
 import javafx.geometry.Pos
@@ -57,12 +57,12 @@ object Home : VBox(12.0), VisibleAware {
 
     override fun becomesVisible() {
         println("Home view is visible")
-        App.readRFIDIfIsEnable()
+        AppSetting.readRFIDIfIsEnable()
     }
 
     override fun becomesInvisible() {
         println("Home view is invisible")
-        App.stopReadingRFIDIfIsEnable()
+        AppSetting.stopReadingRFIDIfIsEnable()
     }
 
 
