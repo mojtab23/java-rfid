@@ -5,7 +5,7 @@ import javafx.scene.Scene
 
 object SceneController {
 
-    private val scene = Scene(Home, 600.0, 400.0)
+    val scene = Scene(Home, 600.0, 400.0)
     private var currentRoot: VisibleAware = Home
 
     fun buildScene(): Scene {

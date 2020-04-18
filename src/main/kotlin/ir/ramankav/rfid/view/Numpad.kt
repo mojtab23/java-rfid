@@ -5,16 +5,15 @@ import javafx.geometry.Insets
 import javafx.scene.Node
 import javafx.scene.control.Button
 import javafx.scene.input.KeyCode
+import javafx.scene.input.KeyEvent
+import javafx.scene.input.KeyEvent.CHAR_UNDEFINED
 import javafx.scene.layout.ColumnConstraints
 import javafx.scene.layout.GridPane
 import javafx.scene.layout.Region
 import javafx.scene.layout.RowConstraints
-import javafx.scene.robot.Robot
 import javafx.scene.shape.SVGPath
 
 class Numpad : GridPane() {
-
-    private val robot = Robot()
 
 
     init {
@@ -36,15 +35,15 @@ class Numpad : GridPane() {
 
         for (i in 0..8) {
             val keyCode = when (i) {
-                0 -> KeyCode.NUMPAD1
-                1 -> KeyCode.NUMPAD2
-                2 -> KeyCode.NUMPAD3
-                3 -> KeyCode.NUMPAD4
-                4 -> KeyCode.NUMPAD5
-                5 -> KeyCode.NUMPAD6
-                6 -> KeyCode.NUMPAD7
-                7 -> KeyCode.NUMPAD8
-                8 -> KeyCode.NUMPAD9
+                0 -> KeyCode.DIGIT1
+                1 -> KeyCode.DIGIT2
+                2 -> KeyCode.DIGIT3
+                3 -> KeyCode.DIGIT4
+                4 -> KeyCode.DIGIT5
+                5 -> KeyCode.DIGIT6
+                6 -> KeyCode.DIGIT7
+                7 -> KeyCode.DIGIT8
+                8 -> KeyCode.DIGIT9
                 else -> KeyCode.ALT
             }
             this.add(createButton((i + 1).toString(), keyCode), i % 3, i / 3)
@@ -73,7 +72,7 @@ class Numpad : GridPane() {
         svgEnterShape.setMaxSize(30.0, 18.0)
 
         this.add(createButton("", KeyCode.ENTER, svgEnterShape), 0, 3)
-        this.add(createButton("0", KeyCode.NUMPAD0), 1, 3)
+        this.add(createButton("0", KeyCode.DIGIT0), 1, 3)
         this.add(createButton("", KeyCode.BACK_SPACE, svgShape), 2, 3)
 
 
@@ -86,8 +85,13 @@ class Numpad : GridPane() {
             Button(text, graphic)
         }
         button.prefWidth
-        button.onAction = EventHandler { event ->
-            robot.keyType(keyCode)
+        button.onAction = EventHandler {
+            val press = KeyEvent(button, SceneController.scene.focusOwner, KeyEvent.KEY_PRESSED, CHAR_UNDEFINED, keyCode.name, keyCode, false, false, false, false)
+            SceneController.scene.focusOwner.fireEvent(press)
+            val typed = KeyEvent(button, SceneController.scene.focusOwner, KeyEvent.KEY_TYPED, keyCode.char, "", KeyCode.UNDEFINED, false, false, false, false)
+            SceneController.scene.focusOwner.fireEvent(typed)
+            val release = KeyEvent(button, SceneController.scene.focusOwner, KeyEvent.KEY_RELEASED, CHAR_UNDEFINED, keyCode.name, keyCode, false, false, false, false)
+            SceneController.scene.focusOwner.fireEvent(release)
         }
         button.isFocusTraversable = false
         button.maxWidth = Double.MAX_VALUE

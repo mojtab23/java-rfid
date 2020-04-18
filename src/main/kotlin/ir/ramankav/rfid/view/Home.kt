@@ -29,6 +29,11 @@ object Home : VBox(12.0), VisibleAware {
     private val service = object : Service<Unit>() {
         override fun createTask(): Task<Unit> {
             return object : Task<Unit>() {
+                override fun cancel(mayInterruptIfRunning: Boolean): Boolean {
+                    RFIDReaderService.stopReading()
+                    return super.cancel(mayInterruptIfRunning)
+                }
+
                 override fun call() {
                     RFIDReaderService.readId {
                         Platform.runLater {

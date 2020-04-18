@@ -60,6 +60,7 @@ object RFIDReaderService {
 
     fun readId(callback: (String) -> Unit) {
         var cardId: String? = null
+        running = true
         while (running && cardId == null) {
             cardId = readCard()
             SleepUtil.sleepMillis(500)
@@ -67,6 +68,10 @@ object RFIDReaderService {
         if (running && cardId != null) {
             callback(cardId)
         }
+    }
+
+    fun stopReading() {
+        running = false
     }
 
     fun closeResources() {
