@@ -3,6 +3,7 @@ package ir.ramankav.rfid.view
 import javafx.application.Platform
 import javafx.concurrent.Service
 import javafx.concurrent.Task
+import javafx.event.ActionEvent
 import javafx.event.EventHandler
 import javafx.geometry.Insets
 import javafx.geometry.NodeOrientation
@@ -32,11 +33,13 @@ object UnlockView : HBox(), VisibleAware {
         val viewName = Label(VIEW_NAME)
         rightItems.children += viewName
 
+        val submitInput = EventHandler<ActionEvent> { SceneController.showIPConfigView() }
         passwordField.promptText = UNLOCK_CODE
+        passwordField.onAction = submitInput
         rightItems.children += passwordField
 
         val button = Button(UNLOCK)
-        button.onAction = EventHandler { SceneController.showIPConfigView() }
+        button.onAction = submitInput
         rightItems.children += button
 
         val numpad = Numpad()

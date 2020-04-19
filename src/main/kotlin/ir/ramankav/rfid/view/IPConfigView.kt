@@ -1,5 +1,6 @@
 package ir.ramankav.rfid.view
 
+import javafx.event.ActionEvent
 import javafx.event.EventHandler
 import javafx.geometry.Insets
 import javafx.geometry.NodeOrientation
@@ -28,16 +29,20 @@ object IPConfigView : HBox(), VisibleAware {
         val viewName = Label("Configure IP")
         leftItems.children += viewName
 
+        ip.onAction = EventHandler { mask.requestFocus() }
         leftItems.children += ip
 
         mask.promptText = "24"
+        mask.onAction = EventHandler { gateway.requestFocus() }
         leftItems.children += mask
 
+        val submitInputs = EventHandler<ActionEvent> { println("save IP") }
+        gateway.onAction = submitInputs
         leftItems.children += gateway
 
         val saveButton = Button("Save")
-        saveButton.onAction = EventHandler { println("save IP") }
-        val cancelButton = Button("Cancel")
+        saveButton.onAction = submitInputs
+        val cancelButton = Button("Close")
         cancelButton.onAction = EventHandler { SceneController.showHomeView() }
         leftItems.children += ToolBar(saveButton, cancelButton)
 

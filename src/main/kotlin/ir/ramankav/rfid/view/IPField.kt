@@ -1,5 +1,7 @@
 package ir.ramankav.rfid.view
 
+import javafx.event.ActionEvent
+import javafx.event.EventHandler
 import javafx.geometry.NodeOrientation
 import javafx.scene.control.Label
 import javafx.scene.control.TextField
@@ -17,11 +19,19 @@ class IPField(
     private val field3 = TextField()
     private val field4 = TextField()
 
+    fun onActionProperty() = field4.onActionProperty()
+    var onAction: EventHandler<ActionEvent>?
+        get() = onActionProperty().get()
+        set(value) = onActionProperty().set(value)
+
     init {
         this.nodeOrientation = NodeOrientation.LEFT_TO_RIGHT
         field1.promptText = t1
+        field1.onAction = EventHandler { field2.requestFocus() }
         field2.promptText = t2
+        field2.onAction = EventHandler { field3.requestFocus() }
         field3.promptText = t3
+        field3.onAction = EventHandler { field4.requestFocus() }
         field4.promptText = t4
         this.children += field1
         this.children += Label(".")
@@ -55,6 +65,10 @@ class IPField(
         field2.clear()
         field3.clear()
         field4.clear()
+    }
+
+    override fun requestFocus() {
+        field1.requestFocus()
     }
 
 }

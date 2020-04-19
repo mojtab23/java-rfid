@@ -33,6 +33,7 @@ object UserPassView : HBox(), VisibleAware {
         val label = Label(USER_ID)
         rightItems.children += label
         userId.promptText = USER_ID
+        userId.onAction = EventHandler { secondaryPass.requestFocus() }
         rightItems.children += userId
 
         val submitInput = EventHandler<ActionEvent> { SceneController.showCardView("test", "test") }
