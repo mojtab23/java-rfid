@@ -22,6 +22,10 @@ object SceneController {
         switchScene(Home)
     }
 
+    fun showForgetCardView() {
+        switchScene(ForgetCardView)
+    }
+
     fun showIPConfigView() {
         switchScene(IPConfigView)
     }
