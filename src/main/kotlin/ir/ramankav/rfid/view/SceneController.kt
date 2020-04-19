@@ -5,7 +5,7 @@ import javafx.scene.Scene
 
 object SceneController {
 
-    val scene = Scene(Home, 600.0, 400.0)
+    val scene = Scene(Home, 800.0, 600.0)
     private var currentRoot: VisibleAware = Home
 
     fun buildScene(): Scene {
@@ -24,6 +24,10 @@ object SceneController {
 
     fun showForgetCardView() {
         switchScene(ForgetCardView)
+    }
+
+     fun showUserPassView() {
+        switchScene(UserPassView)
     }
 
     fun showIPConfigView() {
