@@ -18,6 +18,9 @@ private const val PROCESS_CODE = "بررسی اطلاعات"
 
 object UserPassView : HBox(), VisibleAware {
 
+    private val userId = TextField()
+    private val secondaryPass = PasswordField()
+
     init {
         val rightItems = VBox()
         rightItems.spacing = 10.0
@@ -29,7 +32,6 @@ object UserPassView : HBox(), VisibleAware {
 
         val label = Label(USER_ID)
         rightItems.children += label
-        val userId = TextField()
         userId.promptText = USER_ID
         rightItems.children += userId
 
@@ -37,7 +39,6 @@ object UserPassView : HBox(), VisibleAware {
 
         val label1 = Label(SECONDARY_PASS)
         rightItems.children += label1
-        val secondaryPass = PasswordField()
         secondaryPass.promptText = SECONDARY_PASS
         secondaryPass.onAction = submitInput
         rightItems.children += secondaryPass
@@ -58,6 +59,12 @@ object UserPassView : HBox(), VisibleAware {
 
     override fun becomesInvisible() {
         println("User Pass view is invisible")
-//todo clear fields
+        clearInputs()
     }
+
+    private fun clearInputs() {
+        userId.clear()
+        secondaryPass.clear()
+    }
+
 }

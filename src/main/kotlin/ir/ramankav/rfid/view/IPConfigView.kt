@@ -15,6 +15,10 @@ object IPConfigView : HBox(), VisibleAware {
 
     private val timerService = createTimerService(Duration.ofMinutes(1))
 
+    private val ip = IPField("192", "168", "1", "10")
+    private val gateway = IPField("192", "168", "1", "1")
+    private val mask = TextField()
+
     init {
         val leftItems = VBox()
         leftItems.spacing = 10.0
@@ -24,20 +28,12 @@ object IPConfigView : HBox(), VisibleAware {
         val viewName = Label("Configure IP")
         leftItems.children += viewName
 
-//        val ipAddress = TextField()
-//        ipAddress.promptText = "192.168.1.10"
-//        rightItems.children += ipAddress
-        leftItems.children += IPField("192", "168", "1", "10")
+        leftItems.children += ip
 
-
-        val mask = TextField()
         mask.promptText = "24"
         leftItems.children += mask
 
-//        val gateway = TextField()
-//        gateway.promptText = "192.168.1.1"
-//        rightItems.children += gateway
-        leftItems.children += IPField("192", "168", "1", "1")
+        leftItems.children += gateway
 
         val saveButton = Button("Save")
         saveButton.onAction = EventHandler { println("save IP") }
@@ -59,6 +55,13 @@ object IPConfigView : HBox(), VisibleAware {
     override fun becomesInvisible() {
         println("IPConfigView is invisible")
         timerService.cancel()
+        clearInputs()
+    }
+
+    private fun clearInputs() {
+        ip.clear()
+        gateway.clear()
+        mask.clear()
     }
 }
 

@@ -21,6 +21,8 @@ object UnlockView : HBox(), VisibleAware {
 
     private val timerService = createTimerService(Duration.ofSeconds(30))
 
+    private val passwordField = PasswordField()
+
     init {
         val rightItems = VBox()
         rightItems.spacing = 10.0
@@ -30,7 +32,6 @@ object UnlockView : HBox(), VisibleAware {
         val viewName = Label(VIEW_NAME)
         rightItems.children += viewName
 
-        val passwordField = PasswordField()
         passwordField.promptText = UNLOCK_CODE
         rightItems.children += passwordField
 
@@ -59,6 +60,11 @@ object UnlockView : HBox(), VisibleAware {
     override fun becomesInvisible() {
         println("Unlock view is invisible")
         cancelCountDownTimer()
+        clearInputs()
+    }
+
+    private fun clearInputs() {
+        passwordField.clear()
     }
 
 }

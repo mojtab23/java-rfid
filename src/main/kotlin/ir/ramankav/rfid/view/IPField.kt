@@ -50,4 +50,11 @@ class IPField(
         return false
     }
 
+    fun clear() {
+        field1.clear()
+        field2.clear()
+        field3.clear()
+        field4.clear()
+    }
+
 }

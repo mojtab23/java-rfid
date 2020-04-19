@@ -17,14 +17,11 @@ class DigitalClock : Label() {
     init {
         id = "digitalClock"
         styleClass += "footer"
-//        stylesheets += ResourceResolver.getResourceFor(this.javaClass, "styles.css")
-        bindToTime()
     }
 
     private val jalaliCalendar = JalaliCalendar()
 
-    // the digital clock updates once a second.
-    private fun bindToTime() {
+    private val timeline: Timeline by lazy {
         val timeline = Timeline(
                 KeyFrame(Duration.seconds(0.0),
                         EventHandler {
@@ -48,7 +45,15 @@ class DigitalClock : Label() {
                 KeyFrame(Duration.seconds(1.0))
         )
         timeline.cycleCount = Animation.INDEFINITE
+        timeline
+    }
+
+    fun play() {
         timeline.play()
+    }
+
+    fun stop() {
+        timeline.stop()
     }
 
 }

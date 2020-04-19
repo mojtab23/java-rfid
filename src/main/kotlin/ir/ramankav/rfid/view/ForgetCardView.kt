@@ -1,5 +1,6 @@
 package ir.ramankav.rfid.view
 
+import javafx.event.ActionEvent
 import javafx.event.EventHandler
 import javafx.geometry.Insets
 import javafx.geometry.NodeOrientation
@@ -16,6 +17,8 @@ private const val PROCESS_CODE = "بررسی کد"
 
 object ForgetCardView : HBox(), VisibleAware {
 
+    private val forgetCode = TextField()
+
     init {
         val rightItems = VBox()
         rightItems.spacing = 10.0
@@ -25,12 +28,13 @@ object ForgetCardView : HBox(), VisibleAware {
         val viewName = Label(VIEW_NAME)
         rightItems.children += viewName
 
-        val forgetCode = TextField()
+        val submitInput = EventHandler<ActionEvent> { SceneController.showCardView("test", "test") }
         forgetCode.promptText = FORGET_CODE
+        forgetCode.onAction = submitInput
         rightItems.children += forgetCode
 
         val button = Button(PROCESS_CODE)
-        button.onAction = EventHandler { SceneController.showCardView("test","test") }
+        button.onAction = submitInput
         rightItems.children += button
 
         val numpad = Numpad()
@@ -46,7 +50,11 @@ object ForgetCardView : HBox(), VisibleAware {
 
     override fun becomesInvisible() {
         println("Forget card view is invisible")
+        clearInputs()
+    }
 
+    private fun clearInputs() {
+        forgetCode.clear()
     }
 
 }

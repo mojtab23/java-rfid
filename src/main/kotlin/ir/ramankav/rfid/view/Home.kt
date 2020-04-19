@@ -22,6 +22,8 @@ private const val LOCK_ICON_SVG_PATH = "M 16 0 C 13.789063 0 11.878906 0.917969 
 
 object Home : VBox(12.0), VisibleAware {
 
+    private val digitalClock = DigitalClock()
+
     init {
         padding = Insets(10.0)
         alignment = Pos.CENTER
@@ -53,18 +55,20 @@ object Home : VBox(12.0), VisibleAware {
         lockIcon.content = LOCK_ICON_SVG_PATH
         lockBtn.graphic = lockIcon
         footer.children += lockBtn
-        footer.children += DigitalClock()
+        footer.children += digitalClock
         children += footer
     }
 
     override fun becomesVisible() {
         println("Home view is visible")
         AppSetting.readRFIDIfIsEnable()
+        digitalClock.play()
     }
 
     override fun becomesInvisible() {
         println("Home view is invisible")
         AppSetting.stopReadingRFIDIfIsEnable()
+        digitalClock.stop()
     }
 
 
