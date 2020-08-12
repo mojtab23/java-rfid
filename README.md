@@ -2,6 +2,12 @@
 
 A RFID reader with raspberry pi. users can provide their cards and app checkes if they have any reservation for that day.
 
+### Screenshots:
+![sc-0](screenshots/photo_2020-08-13_00-35-27.jpg)
+![sc-1](screenshots/photo_2020-08-13_00-35-33.jpg)
+![sc-2](screenshots/photo_2020-08-13_00-35-35.jpg)
+![sc-3](screenshots/photo_2020-08-13_00-35-37.jpg)
+
 ### Assemble
 
 Library that used in this project uses BCM port numbering
