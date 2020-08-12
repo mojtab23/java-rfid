@@ -1,5 +1,7 @@
 ## Ramankav RFID Reader
 
+A RFID reader with raspberry pi. users can provide their cards and app checkes if they have any reservation for that day.
+
 ### Assemble
 
 Library that used in this project uses BCM port numbering
