@@ -7,6 +7,7 @@ A RFID reader with raspberry pi. users can provide their cards and app checkes i
 ![sc-1](screenshots/photo_2020-08-13_00-35-33.jpg)
 ![sc-2](screenshots/photo_2020-08-13_00-35-35.jpg)
 ![sc-3](screenshots/photo_2020-08-13_00-35-37.jpg)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fmojtab23%2Fjava-rfid.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fmojtab23%2Fjava-rfid?ref=badge_shield)
 
 ### Assemble
 
@@ -38,3 +39,7 @@ for example IO port of buzzer uses port 24 in BCM numbering.
  - I/O connects to Pin 18.
  - GND connects to Pin 20.
 
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fmojtab23%2Fjava-rfid.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fmojtab23%2Fjava-rfid?ref=badge_large)
